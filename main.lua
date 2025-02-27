@@ -32,10 +32,10 @@ SMODS.Atlas {
     py = 95
 }
 
--- consumeable atlas
+-- consumable atlas
 SMODS.Atlas {
-    key = "consumeables",
-    path = "consumeables.png",
+    key = "consumables",
+    path = "consumables.png",
     px = 71,
     py = 95
 }
@@ -101,13 +101,13 @@ NFS.load(SMODS.current_mod.path .. 'scripts/blinds.lua')()
 -- JOKERS --
 NFS.load(SMODS.current_mod.path .. 'scripts/jokers.lua')()
 
--- CONSUMEABLES --
-NFS.load(SMODS.current_mod.path .. 'scripts/consumeables/items.lua')()
+-- CONSUMABLES --
+NFS.load(SMODS.current_mod.path .. 'scripts/consumables/items.lua')()
 
 -- ENHANCEMENTS --
 NFS.load(SMODS.current_mod.path .. 'scripts/enhancements/snow.lua')()
-NFS.load(SMODS.current_mod.path .. 'scripts/enhancements/hardite.lua')()
-NFS.load(SMODS.current_mod.path .. 'scripts/enhancements/soaked.lua')()
+--NFS.load(SMODS.current_mod.path .. 'scripts/enhancements/hardite.lua')()
+--NFS.load(SMODS.current_mod.path .. 'scripts/enhancements/soaked.lua')()
 NFS.load(SMODS.current_mod.path .. 'scripts/enhancements/fire.lua')()
 
 -- BOOSTERS --

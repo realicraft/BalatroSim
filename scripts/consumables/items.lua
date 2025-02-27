@@ -14,7 +14,7 @@ SMODS.Consumable {
 	key = "glove",
 	pos = { x = 5, y = 0 },
 	config = { hands = 2 },
-	atlas = "consumeables",
+	atlas = "consumables",
 	loc_vars = function(self, info_queue)
 		return { vars = { self.config.hands } }
 	end,
@@ -39,7 +39,7 @@ SMODS.Consumable {
 	key = "trash_can",
 	pos = { x = 6, y = 0 },
 	config = { discards = 2 },
-	atlas = "consumeables",
+	atlas = "consumables",
 	loc_vars = function(self, info_queue)
 		return { vars = { self.config.discards } }
 	end,
@@ -65,7 +65,7 @@ SMODS.Consumable {
 	pos = { x = 9, y = 1 },
 	config = {},
 	cost = 7,
-	atlas = "consumeables",
+	atlas = "consumables",
 	hidden = "true",
 	soul_set = "item",
 	loc_vars = function(self, info_queue)
@@ -84,7 +84,7 @@ SMODS.Consumable {
 	key = "chip",
 	pos = { x = 7, y = 0 },
 	config = { chip = 1 },
-	atlas = "consumeables",
+	atlas = "consumables",
 	loc_vars = function(self, info_queue)
 		return { vars = { self.config.chip } }
 	end,
@@ -114,7 +114,7 @@ SMODS.Consumable {
 	key = "killbind",
 	pos = { x = 9, y = 0 },
 	config = {  },
-	atlas = "consumeables",
+	atlas = "consumables",
 	loc_vars = function(self, info_queue)
 		return { vars = {  } }
 	end,
@@ -142,7 +142,7 @@ SMODS.Consumable {
 	key = "exp_bottle",
 	pos = { x = 0, y = 1 },
 	config = { hand_types = 3 },
-	atlas = "consumeables",
+	atlas = "consumables",
 	loc_vars = function(self, info_queue)
 		return { vars = { self.config.hand_types } }
 	end,

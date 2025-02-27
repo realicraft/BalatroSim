@@ -35,7 +35,7 @@ SMODS.Consumable {
 	key = "snowball",
 	pos = { x = 0, y = 0 },
 	config = { mod_conv = "m_bs_rc_snow", max_highlighted = 2 },
-	atlas = "consumeables",
+	atlas = "consumables",
 	loc_vars = function(self, info_queue)
 		info_queue[#info_queue + 1] = G.P_CENTERS.m_bs_rc_snow
 
@@ -48,7 +48,7 @@ SMODS.Consumable {
 	key = "snowgrave",
 	pos = { x = 1, y = 3 },
 	config = { mod_conv = "m_bs_rc_snow"},
-	atlas = "consumeables",
+	atlas = "consumables",
 	loc_vars = function(self, info_queue)
 		info_queue[#info_queue + 1] = G.P_CENTERS.m_bs_rc_snow
 

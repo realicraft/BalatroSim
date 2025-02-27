@@ -42,7 +42,7 @@ SMODS.Consumable {
 	key = "lamp_oil",
 	pos = { x = 2, y = 0 },
 	config = { mod_conv = "m_bs_rc_fire", max_highlighted = 2 },
-	atlas = "consumeables",
+	atlas = "consumables",
 	loc_vars = function(self, info_queue)
 		info_queue[#info_queue + 1] = G.P_CENTERS.m_bs_rc_fire
 
