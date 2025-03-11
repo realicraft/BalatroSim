@@ -1,6 +1,6 @@
 SMODS.Blind {
     key = 'gana',
-    atlas = 'blinds',
+    atlas = 'bs_blinds',
     pos = { x = 0, y = 0 },
     dollars = 5,
     mult = 2,
@@ -16,7 +16,7 @@ SMODS.Blind {
 
 SMODS.Blind {
     key = 'sebu',
-    atlas = 'blinds',
+    atlas = 'bs_blinds',
     pos = { x = 0, y = 1 },
     dollars = 5,
     mult = 2,
@@ -24,51 +24,52 @@ SMODS.Blind {
     boss_colour = HEX('E6E6A1'),
     bs_rc_is_glyph = true,
     modify_hand = function(self, cards, poker_hands, text, mult, hand_chips)
-        if G.GAME.dollars == 1 or G.GAME.dollars == -1 then
+        if to_big(G.GAME.dollars) == to_big(1) or to_big(G.GAME.dollars) == to_big(-1) then
             return mult, hand_chips, false
         end
-        if G.GAME.dollars < 0 then
+        if to_big(G.GAME.dollars) < to_big(0) then
             return mult, hand_chips / (G.GAME.dollars * -1), true
         end
-        if G.GAME.dollars == 0 then
+        if to_big(G.GAME.dollars) == to_big(0) then
             return mult, hand_chips, false
         end
-        if G.GAME.dollars > 0 then
+        if to_big(G.GAME.dollars) > to_big(0) then
             return mult, hand_chips / G.GAME.dollars, true
         end
     end
 }
 
---[[SMODS.Blind { -- broken :(
+SMODS.Blind {
     key = 'wepa',
-    atlas = 'blinds',
+    atlas = 'bs_blinds',
     pos = { x = 0, y = 2 },
     dollars = 5,
     mult = 2,
     boss = {min = 3, max = 99},
     boss_colour = HEX('E6E6A1'),
     bs_rc_is_glyph = true,
-    after_scoring = function(self)
-        for k, v in ipairs(G.play.cards) do
-            if pseudorandom('blind_wepa') < 1/7 then
-                G.E_MANAGER:add_event(Event({ -- why isn't this doing anything???
+    modify_hand = function(self, cards, poker_hands, text, mult, hand_chips)
+        for k, v in ipairs(cards) do
+            if pseudorandom('blind_wepa') < 1/4 then
+                G.E_MANAGER:add_event(Event({
                     trigger = 'after',
                     delay = 0.5,
                     func = function()
-                        v:remove()
+                        v.ability["bs_rc_markedfordeath"] = true
+                        v:juice_up(0.3, 0.4)
                         play_sound('tarot2')
                         return true
-                    end
+                    end,
                 }))
-                --SMODS.calculate_effect({remove = true}, v)
             end
         end
+        return mult, hand_chips, false
     end
-}--]]
+}
 
 SMODS.Blind {
     key = 'pano',
-    atlas = 'blinds',
+    atlas = 'bs_blinds',
     pos = { x = 0, y = 3 },
     dollars = 5,
     mult = 2,
@@ -79,7 +80,7 @@ SMODS.Blind {
 		if not G.GAME.blind.disabled then
 			if
 				(
-                    BalatroSim.get_alignment("", card) == "bs_rc_align_plant"
+                    BalatroSim.has_alignment("", card, "bs_rc_align_plant")
                 )
 			then
 				return true
@@ -91,7 +92,7 @@ SMODS.Blind {
 
 SMODS.Blind {
     key = 'maca',
-    atlas = 'blinds',
+    atlas = 'bs_blinds',
     pos = { x = 0, y = 4 },
     dollars = 5,
     mult = 2,
@@ -116,7 +117,7 @@ SMODS.Blind {
 
 SMODS.Blind {
     key = 'lana',
-    atlas = 'blinds',
+    atlas = 'bs_blinds',
     pos = { x = 0, y = 5 },
     dollars = 5,
     mult = 2,
@@ -132,7 +133,7 @@ SMODS.Blind {
 
 --[[SMODS.Blind { -- broken :(
     key = 'hata',
-    atlas = 'blinds',
+    atlas = 'bs_blinds',
     pos = { x = 0, y = 6 },
     dollars = 5,
     mult = 3,
@@ -150,7 +151,7 @@ SMODS.Blind {
 
 SMODS.Blind {
     key = 'fodo',
-    atlas = 'blinds',
+    atlas = 'bs_blinds',
     pos = { x = 0, y = 7 },
     dollars = 5,
     mult = 2,
@@ -166,7 +167,7 @@ SMODS.Blind {
 
 SMODS.Blind {
     key = 'firi',
-    atlas = 'blinds',
+    atlas = 'bs_blinds',
     pos = { x = 0, y = 8 },
     dollars = 5,
     mult = 2,
@@ -177,7 +178,7 @@ SMODS.Blind {
 		if not G.GAME.blind.disabled then
 			if
 				(
-                    BalatroSim.get_alignment("", card) == "bs_rc_align_fire"
+                    BalatroSim.has_alignment("", card, "bs_rc_align_fire")
                 )
 			then
 				return true
@@ -189,7 +190,7 @@ SMODS.Blind {
 
 SMODS.Blind {
     key = 'ata',
-    atlas = 'blinds',
+    atlas = 'bs_blinds',
     pos = { x = 0, y = 9 },
     dollars = 5,
     mult = 2,
@@ -200,7 +201,7 @@ SMODS.Blind {
 		if not G.GAME.blind.disabled then
 			if
 				(
-                    BalatroSim.get_alignment("", card) == "bs_rc_align_water"
+                    BalatroSim.has_alignment("", card, "bs_rc_align_water")
                 )
 			then
 				return true
@@ -212,7 +213,7 @@ SMODS.Blind {
 
 SMODS.Blind {
     key = 'leko',
-    atlas = 'blinds',
+    atlas = 'bs_blinds',
     pos = { x = 0, y = 10 },
     dollars = 5,
     mult = 2,
@@ -223,7 +224,7 @@ SMODS.Blind {
 		if not G.GAME.blind.disabled then
 			if
 				(
-                    BalatroSim.get_alignment("", card) == "bs_rc_align_electric"
+                    BalatroSim.has_alignment("", card, "bs_rc_align_electric")
                 )
 			then
 				return true
@@ -235,7 +236,7 @@ SMODS.Blind {
 
 SMODS.Blind {
     key = 'liti',
-    atlas = 'blinds',
+    atlas = 'bs_blinds',
     pos = { x = 0, y = 11 },
     dollars = 5,
     mult = 2,
@@ -246,7 +247,7 @@ SMODS.Blind {
 		if not G.GAME.blind.disabled then
 			if
 				(
-                    BalatroSim.get_alignment("", card) == "bs_rc_align_light"
+                    BalatroSim.has_alignment("", card, "bs_rc_align_light")
                 )
 			then
 				return true
@@ -258,7 +259,7 @@ SMODS.Blind {
 
 SMODS.Blind {
     key = 'diri',
-    atlas = 'blinds',
+    atlas = 'bs_blinds',
     pos = { x = 0, y = 12 },
     dollars = 5,
     mult = 2,
@@ -269,7 +270,7 @@ SMODS.Blind {
 		if not G.GAME.blind.disabled then
 			if
 				(
-                    BalatroSim.get_alignment("", card) == "bs_rc_align_dark"
+                    BalatroSim.has_alignment("", card, "bs_rc_align_dark")
                 )
 			then
 				return true
@@ -281,7 +282,7 @@ SMODS.Blind {
 
 SMODS.Blind {
     key = 'saze',
-    atlas = 'blinds',
+    atlas = 'bs_blinds',
     pos = { x = 0, y = 13 },
     dollars = 5,
     mult = 5,
@@ -304,7 +305,7 @@ SMODS.Blind {
 
 --[[SMODS.Blind {
     key = 'piri',
-    atlas = 'blinds',
+    atlas = 'bs_blinds',
     pos = { x = 0, y = 14 },
     dollars = 5,
     mult = 2,
@@ -321,7 +322,7 @@ SMODS.Blind {
 
 SMODS.Blind {
     key = 'fica',
-    atlas = 'blinds',
+    atlas = 'bs_blinds',
     pos = { x = 0, y = 15 },
     dollars = 5,
     mult = 2,
@@ -340,7 +341,7 @@ SMODS.Blind {
 
 SMODS.Blind {
     key = 'ere',
-    atlas = 'blinds',
+    atlas = 'bs_blinds',
     pos = { x = 0, y = 16 },
     dollars = 10,
     mult = 2,
@@ -358,45 +359,37 @@ SMODS.Blind {
 
 SMODS.Blind {
     key = 'bufu',
-    atlas = 'blinds',
+    atlas = 'bs_blinds',
     pos = { x = 0, y = 17 },
     dollars = 5,
-    mult = 2,
+    mult = 3,
     boss = {min = 1, max = 99},
     boss_colour = HEX('E6E6A1'),
     bs_rc_is_glyph = true,
-    latest_hand = "High Card",
     modify_hand = function(self, cards, poker_hands, text, mult, hand_chips)
-        G.GAME.blind.latest_hand = text
+        level_up_hand(G.GAME.blind.children.animatedSprite, text, nil, 2)
         return mult, hand_chips, false -- not actually modifying the hand
     end,
-    defeat = function(self)
-        level_up_hand(G.GAME.blind.children.animatedSprite, G.GAME.blind.latest_hand, nil, 1)
-    end
 }
 
 SMODS.Blind {
     key = 'fubu',
-    atlas = 'blinds',
+    atlas = 'bs_blinds',
     pos = { x = 0, y = 18 },
     dollars = 5,
     mult = 2,
     boss = {min = 3, max = 99},
     boss_colour = HEX('E6E6A1'),
     bs_rc_is_glyph = true,
-    latest_hand = "High Card",
     modify_hand = function(self, cards, poker_hands, text, mult, hand_chips)
-        G.GAME.blind.latest_hand = text
+        level_up_hand(G.GAME.blind.children.animatedSprite, text, nil, -2)
         return mult, hand_chips, false -- not actually modifying the hand
     end,
-    defeat = function(self)
-        level_up_hand(G.GAME.blind.children.animatedSprite, G.GAME.blind.latest_hand, nil, -1)
-    end
 }
 
 SMODS.Blind {
     key = 'citi',
-    atlas = 'blinds',
+    atlas = 'bs_blinds',
     pos = { x = 0, y = 19 },
     dollars = 5,
     mult = 2,
@@ -422,7 +415,7 @@ SMODS.Blind {
 
 SMODS.Blind {
     key = 'mero',
-    atlas = 'blinds',
+    atlas = 'bs_blinds',
     pos = { x = 0, y = 20 },
     dollars = 5,
     mult = 2,
@@ -446,7 +439,7 @@ SMODS.Blind {
 
 SMODS.Blind {
     key = 'zesa',
-    atlas = 'blinds',
+    atlas = 'bs_blinds',
     pos = { x = 0, y = 21 },
     dollars = 5,
     mult = 1.7,
@@ -467,7 +460,7 @@ SMODS.Blind {
 
 --[[SMODS.Blind { -- next update
     key = 'kaba',
-    atlas = 'blinds',
+    atlas = 'bs_blinds',
     pos = { x = 0, y = 22 },
     dollars = 5,
     mult = 2,
@@ -476,20 +469,64 @@ SMODS.Blind {
     bs_rc_is_glyph = true,
 }--]]
 
---[[SMODS.Blind { -- next update
+SMODS.Blind {
     key = 'toko',
-    atlas = 'blinds',
+    atlas = 'bs_blinds',
     pos = { x = 0, y = 31 },
     dollars = 5,
     mult = 2,
     boss = {min = 3, max = 99},
     boss_colour = HEX('E6E6A1'),
     bs_rc_is_glyph = true,
-}--]]
+    -- borrowed from Maximus (specifically https://github.com/the-Astra/Maximus/blob/main/items/blinds/grinder.lua#L17C5-L35C8 )
+    modify_hand = function(self, cards, poker_hands, text, mult, hand_chips)
+        local valid = {}
+        for k, v in ipairs(G.play.cards) do
+            if v.config.center.key == "c_base" then
+                valid[#valid+1] = v
+            end
+        end
+        if #valid > 0 then
+            local target = pseudorandom_element(valid, pseudoseed("toko_played"))
+            G.E_MANAGER:add_event(Event({
+                trigger = 'after',
+                delay = 0.5,
+                func = function()
+                    target:set_ability(G.P_CENTERS.m_bs_rc_poison)
+                    target:juice_up(0.3, 0.4)
+                    play_sound('tarot2')
+                    return true
+                end
+            }))
+            SMODS.calculate_effect({ message = localize("bs_rc_notice_poisoned") }, target)
+        end
+        valid = {}
+        for k, v in ipairs(G.hand.cards) do
+            if v.config.center.key == "c_base" then
+                valid[#valid+1] = v
+            end
+        end
+        if #valid > 0 then
+            local target = pseudorandom_element(valid, pseudoseed("toko_hand"))
+            G.E_MANAGER:add_event(Event({
+                trigger = 'after',
+                delay = 0.5,
+                func = function()
+                    target:set_ability(G.P_CENTERS.m_bs_rc_poison)
+                    target:juice_up(0.3, 0.4)
+                    play_sound('tarot2')
+                    return true
+                end
+            }))
+            SMODS.calculate_effect({ message = localize("bs_rc_notice_poisoned") }, target)
+        end
+        return mult, hand_chips, false -- not actually modifying these numbers
+    end
+}
 
 SMODS.Blind {
     key = 'ifi',
-    atlas = 'blinds',
+    atlas = 'bs_blinds',
     pos = { x = 0, y = 32 },
     dollars = 5,
     mult = 2,
@@ -500,7 +537,7 @@ SMODS.Blind {
 		if not G.GAME.blind.disabled then
 			if
 				(
-                    BalatroSim.get_alignment("", card) == "bs_rc_align_ice"
+                    BalatroSim.has_alignment("", card, "bs_rc_align_ice")
                 )
 			then
 				return true
@@ -512,7 +549,7 @@ SMODS.Blind {
 
 SMODS.Blind {
     key = 'esi',
-    atlas = 'blinds',
+    atlas = 'bs_blinds',
     pos = { x = 0, y = 33 },
     dollars = 5,
     mult = 2,
@@ -538,7 +575,7 @@ SMODS.Blind {
 
 SMODS.Blind {
     key = 'unaligned',
-    atlas = 'blinds',
+    atlas = 'bs_blinds',
     pos = { x = 0, y = 23 },
     dollars = 8,
     mult = 2,
@@ -563,7 +600,7 @@ SMODS.Blind {
 
 SMODS.Blind {
     key = 'energy',
-    atlas = 'blinds',
+    atlas = 'bs_blinds',
     pos = { x = 0, y = 24 },
     dollars = 8,
     mult = 2,

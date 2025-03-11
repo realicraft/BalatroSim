@@ -1,7 +1,7 @@
 SMODS.Enhancement {
     key = 'snow',
     config = {extra = {bonus_chips = 15, mult = -1}},
-    atlas = 'enhancements',
+    atlas = 'bs_enhancements',
     pos = { x = 0, y = 0 },
     loc_vars = function(self, info_queue, card)
         return {vars = {
@@ -35,7 +35,8 @@ SMODS.Consumable {
 	key = "snowball",
 	pos = { x = 0, y = 0 },
 	config = { mod_conv = "m_bs_rc_snow", max_highlighted = 2 },
-	atlas = "consumables",
+	atlas = "bs_consumables",
+	cost = 4,
 	loc_vars = function(self, info_queue)
 		info_queue[#info_queue + 1] = G.P_CENTERS.m_bs_rc_snow
 
@@ -48,7 +49,8 @@ SMODS.Consumable {
 	key = "snowgrave",
 	pos = { x = 1, y = 3 },
 	config = { mod_conv = "m_bs_rc_snow"},
-	atlas = "consumables",
+	atlas = "bs_consumables",
+	cost = 8,
 	loc_vars = function(self, info_queue)
 		info_queue[#info_queue + 1] = G.P_CENTERS.m_bs_rc_snow
 
@@ -56,7 +58,7 @@ SMODS.Consumable {
 	end,
     can_use = function(self, card)
 		-- borrowed from UnStable (specifically https://github.com/kirbio/UnStable/blob/main/Unstable.lua#L2844C4-L2844C113 )
-		return G.hand and not G.blind_select and G.STATE ~= G.STATES.ROUND_EVAL and not G.shop and not G.booster_pack
+		return G.hand and not G.blind_select and G.STATE ~= G.STATES.ROUND_EVAL
 	end,
     -- borrowed from Cryptid (specifically https://github.com/MathIsFun0/Cryptid/blob/main/Items/CodeCards.lua#L352C2-L393C6 )
     use = function(self, card, area, copier)
@@ -109,7 +111,7 @@ SMODS.Joker {
         return { vars = { card.ability.extra.chip_inc, card.ability.extra.mult_inc, card.ability.extra.chips, card.ability.extra.mult } }
     end,
     rarity = 2,
-    atlas = 'jokers',
+    atlas = 'bs_jokers',
     pos = { x = 2, y = 1 },
     cost = 6,
 	blueprint_compat = true,
@@ -157,7 +159,8 @@ SMODS.Joker {
         return { vars = { card.ability.extra.chips_per, card.ability.extra.chips_per*G.GAME.round_resets.ante } }
     end,
     rarity = 3,
-    atlas = 'jokers',
+    atlas = 'bs_jokers',
     pos = { x = 3, y = 1 },
     cost = 7,
+	-- passive - no calaculate function
 }

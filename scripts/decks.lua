@@ -21,7 +21,7 @@ local rare_alignments = {
 
 SMODS.Back {
     key = "aligned",
-    atlas = "decks",
+    atlas = "bs_decks",
     pos = {x = 0, y = 0},
     apply = function(self)
         BalatroSim.vars.deck_has_aligned = true
@@ -30,7 +30,7 @@ SMODS.Back {
                 for i = #G.playing_cards, 1, -1 do
                     local align = nil
                     local rand = pseudorandom('align_deck')
-                    if rand < 0.08 then
+                    if rand < 0.06 then
                         align = pseudorandom_element(rare_alignments, pseudoseed("align_deck"))
                     else
                         align = pseudorandom_element(common_alignments, pseudoseed("align_deck"))

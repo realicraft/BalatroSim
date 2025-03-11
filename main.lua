@@ -6,17 +6,40 @@ BalatroSim = SMODS.current_mod
 BalatroSim.vars = {}
 
 -- ATLASES --
+
+-- logo
+SMODS.Atlas {
+    key = "modicon",
+	path = "logo.png",
+	px = 32,
+	py = 32
+}
+
 -- joker atlas
 SMODS.Atlas {
-    key = "jokers",
+    key = "bs_jokers",
     path = "jokers.png",
+    px = 71,
+    py = 95
+}
+
+SMODS.Atlas {
+    key = "bs_cjokers",
+    path = "jokers_compat.png",
+    px = 71,
+    py = 95
+}
+
+SMODS.Atlas {
+    key = "bs_legendaries",
+    path = "legendaries.png",
     px = 71,
     py = 95
 }
 
 -- blind atlas
 SMODS.Atlas {
-    key = "blinds",
+    key = "bs_blinds",
     path = "blinds.png",
     px = 34,
     py = 34,
@@ -26,7 +49,7 @@ SMODS.Atlas {
 
 -- enhancement atlas
 SMODS.Atlas {
-    key = "enhancements",
+    key = "bs_enhancements",
     path = "enhancements.png",
     px = 71,
     py = 95
@@ -34,7 +57,7 @@ SMODS.Atlas {
 
 -- consumable atlas
 SMODS.Atlas {
-    key = "consumables",
+    key = "bs_consumables",
     path = "consumables.png",
     px = 71,
     py = 95
@@ -42,7 +65,7 @@ SMODS.Atlas {
 
 -- booster atlas
 SMODS.Atlas {
-    key = "boosters",
+    key = "bs_boosters",
     path = "boosters.png",
     px = 71,
     py = 95
@@ -50,15 +73,23 @@ SMODS.Atlas {
 
 -- alignment atlas
 SMODS.Atlas {
-    key = "alignments",
+    key = "bs_alignments",
     path = "alignments.png",
+    px = 71,
+    py = 95
+}
+
+-- sticker atlas
+SMODS.Atlas {
+    key = "bs_stickers",
+    path = "stickers.png",
     px = 71,
     py = 95
 }
 
 -- tag atlas
 SMODS.Atlas {
-    key = "tags",
+    key = "bs_tags",
     path = "tags.png",
     px = 34,
     py = 34
@@ -66,11 +97,18 @@ SMODS.Atlas {
 
 -- deck atlas
 SMODS.Atlas {
-    key = "decks",
+    key = "bs_decks",
     path = "decks.png",
     px = 71,
     py = 95
 }
+
+-- good ol' talisman
+if not to_big then
+    to_big = function(num)
+        return num
+    end
+end
 
 -- COLORS --
 -- borrowed from Pokermon (specifically https://github.com/InertSteak/Pokermon/blob/main/pokesprites.lua#L268C1-L290C4 )
@@ -92,23 +130,75 @@ function loc_colour(_c, _default)
     return old_colors(_c, _default)
 end
 
+-- FUNCTIONS --
+
+function BalatroSim:blind_active()
+    -- borrowed from UnStable (specifically https://github.com/kirbio/UnStable/blob/main/Unstable.lua#L2868C4-L2868C113 )
+    return G.hand and not G.blind_select and G.STATE ~= G.STATES.ROUND_EVAL and not G.shop and not G.booster_pack
+end
+
+--- @param is_constant boolean
+--- @param value number
+--- @param length number
+function BalatroSim:damage_blind(is_constant, value, length)
+    if BalatroSim:blind_active() then -- blind can't be damaged if there isn't a blind
+        SMODS.juice_up_blind()
+        G.E_MANAGER:add_event(Event(
+            {
+                trigger = 'ease',
+                delay = length,
+                ref_table = G.GAME,
+                ref_value = "chips",
+                ease_to = G.GAME.chips + (is_constant and value or ((value/100) * G.GAME.blind.chips)),
+            }
+        ))
+    end
+end
+
+--- @param center string
+--- @param area table e.g. G.jokers or G.consumeables
+--- returns `nil` if the given area doesn't have a `cards` entry or is itself nil
+function BalatroSim:has_item(center, area)
+    if area and area.cards then
+        for _,v in pairs(area.cards) do
+            if v.config.center.key == center then
+                return true
+            end
+        end
+        return false
+    end
+    return nil -- invalid area
+end
+
+-- SOUNDS --
+SMODS.Sound {
+    key = "gun_shoot",
+    path = "pistol_shoot.wav"
+}
+
 -- ALIGNMENTS --
 NFS.load(SMODS.current_mod.path .. 'scripts/alignments.lua')()
 
 -- BLINDS --
 NFS.load(SMODS.current_mod.path .. 'scripts/blinds.lua')()
 
--- JOKERS --
-NFS.load(SMODS.current_mod.path .. 'scripts/jokers.lua')()
-
 -- CONSUMABLES --
 NFS.load(SMODS.current_mod.path .. 'scripts/consumables/items.lua')()
+NFS.load(SMODS.current_mod.path .. 'scripts/consumables/spectrals.lua')()
 
 -- ENHANCEMENTS --
 NFS.load(SMODS.current_mod.path .. 'scripts/enhancements/snow.lua')()
 --NFS.load(SMODS.current_mod.path .. 'scripts/enhancements/hardite.lua')()
 --NFS.load(SMODS.current_mod.path .. 'scripts/enhancements/soaked.lua')()
 NFS.load(SMODS.current_mod.path .. 'scripts/enhancements/fire.lua')()
+NFS.load(SMODS.current_mod.path .. 'scripts/enhancements/poison.lua')()
+
+-- STICKERS --
+NFS.load(SMODS.current_mod.path .. 'scripts/stickers.lua')()
+
+-- JOKERS --
+NFS.load(SMODS.current_mod.path .. 'scripts/jokers.lua')()
+NFS.load(SMODS.current_mod.path .. 'scripts/legendaries.lua')()
 
 -- BOOSTERS --
 NFS.load(SMODS.current_mod.path .. 'scripts/boosters.lua')()
@@ -118,3 +208,8 @@ NFS.load(SMODS.current_mod.path .. 'scripts/tags.lua')()
 
 -- DECKS --
 NFS.load(SMODS.current_mod.path .. 'scripts/decks.lua')()
+
+-- COMPAT --
+if (SMODS.Mods["Cryptid"] or {}).can_load then
+    NFS.load(SMODS.current_mod.path .. 'scripts/compat/cryptid.lua')()
+end

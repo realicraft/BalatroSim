@@ -1,7 +1,7 @@
 SMODS.Enhancement {
     key = 'fire',
     config = {extra = {xmult = 1, xmult_inc = 0.2, cap = 2}},
-    atlas = 'enhancements',
+    atlas = 'bs_enhancements',
     pos = { x = 3, y = 1 },
     loc_vars = function(self, info_queue, card)
         return {vars = {
@@ -42,7 +42,8 @@ SMODS.Consumable {
 	key = "lamp_oil",
 	pos = { x = 2, y = 0 },
 	config = { mod_conv = "m_bs_rc_fire", max_highlighted = 2 },
-	atlas = "consumables",
+	atlas = "bs_consumables",
+    cost = 4,
 	loc_vars = function(self, info_queue)
 		info_queue[#info_queue + 1] = G.P_CENTERS.m_bs_rc_fire
 
@@ -58,9 +59,10 @@ SMODS.Joker {
         return { vars = {} }
     end,
     rarity = 3,
-    atlas = 'jokers',
+    atlas = 'bs_jokers',
     pos = { x = 4, y = 1 },
     cost = 7,
+    -- passive - no calaculate function
 }
 
 SMODS.Joker {
@@ -71,7 +73,7 @@ SMODS.Joker {
         return { vars = { card.ability.extra.Xmult_inc, card.ability.extra.Xmult } }
     end,
     rarity = 3,
-    atlas = 'jokers',
+    atlas = 'bs_jokers',
     pos = { x = 5, y = 1 },
     cost = 6,
     blueprint_compat = true,
@@ -118,7 +120,7 @@ SMODS.Joker {
         return { vars = {  } }
     end,
     rarity = 3,
-    atlas = 'jokers',
+    atlas = 'bs_jokers',
     pos = { x = 0, y = 2 },
     cost = 5,
     blueprint_compat = true,

@@ -5,13 +5,13 @@
 	"description": "fightsim in balala",
 	"prefix": "bs_rc",
 	"main_file": "main.lua",
-	"priority": 0,
+	"priority": 115,
 	"badge_colour": "777777",
 	"badge_text_colour": "FFFFFF",
 	"display_name": "BalatroSim",
-	"version": "0.1.1",
+	"version": "0.2.0",
 	"dependencies": [
-		"Steamodded (>=1.0.0~ALPHA-1414a)",
+		"Steamodded (>=1.0.0~BETA-0308a)",
 		"Lovely (>=0.6)"
 	]
 }

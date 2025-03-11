@@ -26,8 +26,8 @@ return {
             bl_bs_rc_wepa = {
                 name = 'Wepa',
                 text = {
-                    "(?)1 in 7 chance for played",
-                    "cards to be destroyed"
+                    "1 in 4 chance for played cards",
+                    "to become Marked-for-Death"
                 }
             },
             bl_bs_rc_pano = {
@@ -118,13 +118,13 @@ return {
             bl_bs_rc_bufu = {
                 name = 'Bufu',
                 text = {
-                    "(~)Winning hand gains a level"
+                    "Played hands gain two levels"
                 }
             },
             bl_bs_rc_fubu = {
                 name = 'Fubu',
                 text = {
-                    "(~)Winning hand loses a level"
+                    "Played hands lose two levels"
                 }
             },
             bl_bs_rc_citi = {
@@ -157,7 +157,7 @@ return {
             bl_bs_rc_toko = {
                 name = 'Toko',
                 text = {
-                    "(X)Poisons one card each in",
+                    "Poisons one card each in",
                     "hand and played hand,",
                     "once per hand"
                 }
@@ -240,6 +240,14 @@ return {
                     "+{X:mult,C:white} X#2# {} when played",
                     "Destroyed after reaching {X:mult,C:white} X#3# {}"
                 }
+            },
+            m_bs_rc_poison = {
+                name = 'Poisoned',
+                text = {
+                    "{C:chips}+#1#{} Chips, {X:mult,C:white} X#2# {} Mult",
+                    "{C:green}#3# in #4#{} chance to remove Poisoned",
+                    "{C:green}#5# in #6#{} chance to self-destruct"
+                }
             }
         },
         Joker={
@@ -301,6 +309,29 @@ return {
                     "{X:mult,C:white}X#2#{} Mult if hand is a {C:attention}Straight Flush{}"
                 }
             },
+            j_bs_rc_snake_spec = {
+                name = 'Snake',
+                text = {
+                    "{C:mult}+#1#{} Mult if hand is a {C:attention}Straight{};",
+                    "{X:mult,C:white}X#2#{} Mult if hand is a {C:attention}Straight Flush{} or {C:attention}Straight Spectrum{}"
+                }
+            },
+            j_bs_rc_snake_cry = {
+                name = 'Snake',
+                text = {
+                    "{C:mult}+#1#{} Mult if hand is a {C:attention}Straight{};",
+                    "{X:mult,C:white}X#2#{} Mult if hand is a {C:attention}Straight Flush{}",
+                    "{X:dark_edition,C:white}^#3#{} Mult if hand is a {C:attention}".. (((Cryptid_config and Cryptid_config.family_mode)) and "The Entire Deck" or "The Entire Fucking Deck") .. "{}"
+                }
+            },
+            j_bs_rc_snake_spec_cry = {
+                name = 'Snake',
+                text = {
+                    "{C:mult}+#1#{} Mult if hand is a {C:attention}Straight{};",
+                    "{X:mult,C:white}X#2#{} Mult if hand is a {C:attention}Straight Flush{} or {C:attention}Straight Spectrum{}",
+                    "{X:dark_edition,C:white}^#3#{} Mult if hand is a {C:attention}".. (((Cryptid_config and Cryptid_config.family_mode)) and "The Entire Deck" or "The Entire Fucking Deck") .. "{}"
+                }
+            },
             j_bs_rc_fireproof_joker = {
                 name = 'Fireproof Joker',
                 text = {
@@ -334,8 +365,61 @@ return {
             j_bs_rc_snow_storm = {
                 name = 'Snow Storm',
                 text = {
-                    "{C:attention}Snow-Covered{} now gives {C:chips}+#1#{} Chips {C:attention}per Ante{}",
+                    "{C:attention}Snow-Covered{} now gives",
+                    "{C:chips}+#1#{} Chips {C:attention}per Ante{}",
                     "{C:inactive,s:0.8}(Currently {C:chips,s:0.8}+#2#{C:inactive,s:0.8} Chips){}"
+                }
+            },
+            j_bs_rc_poison_berries = {
+                name = 'Poison Berries',
+                text = {
+                    "For the next {C:attention}#1#{} hands, convert",
+                    "one scored card to {C:attention}Poisoned{}",
+                    "{C:inactive,s:0.8}(Only converts unenhanced cards){}"
+                }
+            },
+            j_bs_rc_poisoned_joker = {
+                name = 'Poisoned Joker',
+                text = {
+                    "{C;attention}Poisoned{} gives an extra",
+                    "{C:chips}+50{} Chips"
+                }
+            },
+            j_bs_rc_bread = {
+                name = 'Loaf of Bread',
+                text = {
+                    "{C:chips}+#1#{} Chips and {C:mult}+#2#{} Mult",
+                    "Decreases by {C:chips}#3#{} and {C:mult}#4#{} each hand"
+                }
+            },
+            j_bs_rc_lava = {
+                name = 'Lava Bucket',
+                text = {
+                    "Each hand, {C:red}destroys{} an unplayed card",
+                    "and gains {X:mult,C:white}+X#1#{} Mult",
+                    "{C:inactive}(Currently {X:mult,C:white}X#2#{}{C:inactive} Mult){}"
+                }
+            },
+            j_bs_rc_hank = {
+                unlock = {
+					"Find this Joker from",
+					"the {C:spectral}Soul{} card",
+				},
+                name = 'Hank',
+                text = {
+                    "Create a {C:attention}Food{} Joker",
+                    "when {C:attention}Blind{} is selected",
+                    "{C:inactive,s:0.8}(Must have room){}"
+                }
+            },
+
+            -- compat --
+            -- cryptid
+            j_bs_rc_cry_code_egg = {
+                name = 'Code Egg',
+                text = {
+                    "Gains {C:money}$#1#{} of sell value",
+                    "every time a {C:cry_code}Code Card{} is used",
                 }
             },
         },
@@ -432,6 +516,43 @@ return {
                 }
             },
 
+            -- actual stickers
+            bs_rc_markedfordeath = {
+                name = "Marked-for-Death",
+                text = {
+                    "Card will be destroyed after",
+                    "being played {C:attention}#1#{} times"
+                }
+            },
+            bs_rc_markedfordeath_joker = {
+                name = "Marked-for-Death",
+                text = {
+                    "Card will be destroyed",
+                    "after {C:attention}#1#{} rounds"
+                }
+            },
+            bs_rc_markedfordeath_consumeable = {
+                name = "Marked-for-Death",
+                text = {
+                    "Card will be destroyed",
+                    "after {C:attention}#1#{} rounds"
+                }
+            },
+            bs_rc_markedfordeath_voucher = {
+                name = "Marked-for-Death",
+                text = {
+                    "Voucher will be unredeemed",
+                    "after {C:attention}#1#{} rounds"
+                }
+            },
+            bs_rc_markedfordeath_booster = {
+				name = "Marked-for-Death",
+				text = {
+					"All cards in pack",
+					"are {C:attention}Marked-for-Death{}",
+				},
+			},
+
             -- undiscovered item
             undiscovered_item = {
                 name = 'Not Discovered',
@@ -458,6 +579,13 @@ return {
                     "to {C:attention}Snow-Covered{}"
                 }
             },
+            c_bs_rc_revert = {
+                name = "Revert",
+                text = {
+                    "Resets {C:attention}#1#{} card to",
+                    "it's initial state"
+                }
+            },
         },
         --Stake={},
         Tag={
@@ -467,7 +595,42 @@ return {
                     "Gives a free",
                     "{C:attention}Mega Item Pack",
                 },
-            }
+            },
+            tag_bs_rc_prize = {
+                name = 'Prize Tag',
+                text = {
+                    "Obtain two random {C:attention}Consumables",
+                    "{C:inactive}(Must have room)",
+                },
+            },
+            tag_bs_rc_card = {
+                name = 'Card Tag',
+                text = {
+                    "Creats a random playing card",
+                    "and adds it to your deck",
+                },
+            },
+            tag_bs_rc_burnt = {
+                name = 'Burnt Tag',
+                text = {
+                    "Converts up to three unenhanced",
+                    "cards into {C:attention}On-Fire",
+                },
+            },
+            tag_bs_rc_align = {
+                name = 'Align Tag',
+                text = {
+                    "Gives three randomly chosen cards",
+                    "from your deck random {C:attention}Alignments",
+                },
+            },
+            tag_bs_rc_gun = {
+                name = 'Gun Tag',
+                text = {
+                    "Gives a free {C:attention}Gun{} and {C:attention}Bullet",
+                    "{C:inactive,s:0.8}(Must have room {C:attention,s:0.8}for both{C:inactive,s:0.8})",
+                },
+            },
         },
         --Tarot={},
         --Voucher={},
@@ -519,6 +682,46 @@ return {
                     "{C:inactive,s:0.8}Will only choose discovered hands{}"
                 }
             },
+            c_bs_rc_poison_vial = {
+                name = "Vial of Poison",
+                text = {
+                    "Converts {C:attention}#1#{} cards to {C:attention}Poisoned{}"
+                }
+            },
+            c_bs_rc_heal_potion = {
+                name = "Potion of Healing",
+                text = {
+                    "Removes {C:attention}negative Enhancements{}",
+                    "from up to {C:attention}#1#{} cards"
+                }
+            },
+            c_bs_rc_wallet = {
+                name = "Wallet",
+                text = {
+                    "Gain between {C:money}$#1#{} and {C:money}$#2#{}"
+                }
+            },
+            c_bs_rc_sword = {
+                name = "Iron Sword",
+                text = {
+                    "Deals {C:attention}#1#%{} damage to the current {C:attention}Blind"
+                }
+            },
+            c_bs_rc_gun = {
+                name = "Gun",
+                text = {
+                    "Shoots the blind and deals {C:attention}#1#%{} damage",
+                    "{C:inactive}Requires a {C:attention}Bullet{C:inactive}"
+                }
+            },
+            c_bs_rc_bullet = {
+                name = "Bullet",
+                text = {
+                    "Used with a {C:attention}Gun{}",
+                    "{C:inactive,s:0.7}I have yet to meet someone",
+                    "{C:inactive,s:0.7}who can outsmart {C:inactive,s:0.8}boolet{C:inactive,s:0.7}."
+                }
+            },
         },
     },
     misc = {
@@ -535,6 +738,10 @@ return {
             bs_rc_notice_extinguish = "Extinguished!",
             bs_rc_notice_heatwave = "Enflamed!",
             bs_rc_notice_snow_shovel = "Shoveled!",
+            bs_rc_notice_poisoned = "Poisoned!",
+            bs_rc_notice_poison_cure = "Cured!",
+            bs_rc_notice_lava_dunk = "Dunked!",
+            bs_rc_notice_mfd_expire = "Doomed!",
         },
         --high_scores={},
         labels={
@@ -548,6 +755,7 @@ return {
             bs_rc_align_light = "Light-Aligned",
             bs_rc_align_dark = "Dark-Aligned",
             bs_rc_align_energy = "Energy-Aligned",
+            bs_rc_markedfordeath = "Marked-for-Death",
         },
         --poker_hand_descriptions={},
         --poker_hands={},
