@@ -1,6 +1,9 @@
 SMODS.Enhancement {
     key = 'fire',
-    config = {extra = {xmult = 1, xmult_inc = 0.2, cap = 2}},
+    config = {extra = {
+        xmult = 1, xmult_inc = 0.2, cap = 2,
+        gymboost = "hmult" -- mintymod compat
+    }},
     atlas = 'bs_enhancements',
     pos = { x = 3, y = 1 },
     loc_vars = function(self, info_queue, card)

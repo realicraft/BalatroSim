@@ -178,7 +178,11 @@ SMODS.Joker {
     atlas = 'bs_jokers',
     pos = { x = 5, y = 0 },
     cost = 6,
-    -- passive - no calaculate function
+    calculate = function(self, card, context)
+        if context.joker_main then
+            rcBLib.cap_score(nil, 0.5)
+        end
+    end
 }
 
 SMODS.Joker {

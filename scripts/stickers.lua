@@ -13,7 +13,7 @@ SMODS.Sticker {
 		elseif card.ability.set == "Booster" then
 			return { key = "bs_rc_markedfordeath_booster" }
 		elseif card.ability.set == "Joker" then
-			return { key = "bs_rc_markedfordeath_joker", vars = { card.ability.turns_left or 3 } }
+			return { key = "bs_rc_markedfordeath_joker", vars = { card.ability.turns_left or 5 } }
 		else
 			return { vars = { card.ability.turns_left or 3 } }
 		end
@@ -27,6 +27,9 @@ SMODS.Sticker {
 				elseif card.ability.set == "Voucher" then
 					card.ability.turns_left = 8
 					card.ability.went_down = false -- not sure why it keeps going down extra times
+				elseif card.ability.set == "Joker" then
+					card.ability.turns_left = 5
+					card.ability.went_down = false
 				else
 					card.ability.turns_left = 3
 				end
@@ -40,6 +43,9 @@ SMODS.Sticker {
 			elseif card.ability.set == "Voucher" then
 				card.ability.turns_left = 8
 				card.ability.went_down = false
+			elseif card.ability.set == "Joker" then
+				card.ability.turns_left = 5
+				card.ability.went_down = false
 			else
 				card.ability.turns_left = 3
 			end
@@ -48,17 +54,35 @@ SMODS.Sticker {
 			card.ability.went_down = false
 		end
 		if ((card.ability.consumeable or card.ability.set == "Joker" or card.ability.set == "Default" or card.ability.set == "Enhanced") and not card.debuff) and not context.repetition then
-			if context.before and context.cardarea == G.play then
-				if card.ability.turns_left <= 1 then
+			if context.before and (context.cardarea == G.play or (context.cardarea == G.jokers and card.ability.set == "Joker")) then
+				if card.ability.turns_left <= 1.1 then
 					SMODS.calculate_effect({message = localize("bs_rc_notice_mfd_expire"), color = G.C.RED}, card)
 				end
 			end
-			if context.after and context.cardarea == G.play then
+			if context.final_scoring_step and (context.cardarea == G.play and (card.ability.set == "Default" or card.ability.set == "Enhanced")) then
 				card.ability.turns_left = card.ability.turns_left - 1
 			end
-			if context.destroy_card and context.cardarea == G.play then
+			if context.end_of_round and (card.ability.set == "Joker" or card.ability.consumeable) and not card.ability.went_down then
+				card.ability.turns_left = card.ability.turns_left - 1
+				card.ability.went_down = true
+			end
+			if context.destroy_card and (card.ability.set == "Default" or card.ability.set == "Enhanced") then
 				if card.ability.turns_left <= 0.1 then
 					return {remove = true}
+				end
+			end
+			if (context.end_of_round and (card.ability.set == "Joker" or card.ability.consumeable)) then
+				if card.ability.turns_left <= 0.1 then
+					G.E_MANAGER:add_event(Event({
+						trigger = "after",
+						delay = 0,
+						func = function()
+							card:start_dissolve()
+							card:remove()
+							card = nil
+							return true
+						end,
+					}))
 				end
 			end
 		end

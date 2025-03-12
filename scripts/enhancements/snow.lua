@@ -1,6 +1,9 @@
 SMODS.Enhancement {
     key = 'snow',
-    config = {extra = {bonus_chips = 15, mult = -1}},
+    config = {extra = {
+		bonus_chips = 15, mult = -1,
+		gymboost = "chips" -- mintymod compat
+	}},
     atlas = 'bs_enhancements',
     pos = { x = 0, y = 0 },
     loc_vars = function(self, info_queue, card)

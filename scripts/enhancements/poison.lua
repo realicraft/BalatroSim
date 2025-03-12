@@ -1,6 +1,9 @@
 SMODS.Enhancement {
     key = 'poison',
-    config = {extra = {bonus_chips = 20, Xmult = 0.9, recover = 8, destroy = 12}},
+    config = {extra = {
+        bonus_chips = 20, Xmult = 0.9, recover = 8, destroy = 12,
+        gymboost = "hchips" -- mintymod compat
+    }},
     atlas = 'bs_enhancements',
     pos = { x = 3, y = 0 },
     loc_vars = function(self, info_queue, card)

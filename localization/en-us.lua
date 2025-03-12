@@ -381,7 +381,7 @@ return {
             j_bs_rc_poisoned_joker = {
                 name = 'Poisoned Joker',
                 text = {
-                    "{C;attention}Poisoned{} gives an extra",
+                    "{C:attention}Poisoned{} gives an extra",
                     "{C:chips}+50{} Chips"
                 }
             },

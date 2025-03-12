@@ -99,10 +99,10 @@ SMODS.Consumable {
 		return { vars = { self.config.chip } }
 	end,
 	can_use = function(self, card)
-		return BalatroSim:blind_active()
+		return rcBLib:blind_active()
 	end,
 	use = function(self, card, area, copier)
-		BalatroSim:damage_blind(true, 1, 0.1)
+		rcBLib:damage_blind(true, 1, 0.1)
 	end,
 	in_pool = function(self, args)
 		return pseudorandom('chip_spawn') < 0.01, { allow_duplicates = false } -- very rare
@@ -288,10 +288,10 @@ SMODS.Consumable {
 		return { vars = { self.config.percent } }
 	end,
 	can_use = function(self, card)
-		return BalatroSim:blind_active()
+		return rcBLib:blind_active()
 	end,
 	use = function(self, card, area, copier)
-		BalatroSim:damage_blind(false, self.config.percent, 0.6 * math.sqrt(G.SETTINGS.GAMESPEED))
+		rcBLib:damage_blind(false, self.config.percent, 0.6 * math.sqrt(G.SETTINGS.GAMESPEED))
 	end,
 	in_pool = function(self, args)
 		return pseudorandom('sword_spawn') < 0.5, { allow_duplicates = false }
@@ -309,11 +309,11 @@ SMODS.Consumable {
 		return { vars = { self.config.percent } }
 	end,
 	can_use = function(self, card)
-		return BalatroSim:blind_active() and BalatroSim:has_item("c_bs_rc_bullet", G.consumeables)
+		return rcBLib:blind_active() and rcBLib:has_item("c_bs_rc_bullet", G.consumeables)
 	end,
 	use = function(self, card, area, copier)
 		play_sound("bs_rc_gun_shoot")
-		BalatroSim:damage_blind(false, self.config.percent, 0.3 * math.sqrt(G.SETTINGS.GAMESPEED))
+		rcBLib:damage_blind(false, self.config.percent, 0.3 * math.sqrt(G.SETTINGS.GAMESPEED))
 		for _,v in pairs(G.consumeables.cards) do
 			if v.config.center.key == "c_bs_rc_bullet" then
 				v:start_dissolve()
@@ -322,7 +322,7 @@ SMODS.Consumable {
 		end
 	end,
 	in_pool = function(self, args)
-		return BalatroSim:has_item("c_bs_rc_bullet", G.consumeables) and true or (pseudorandom('gun_spawn') < 0.35), { allow_duplicates = false }
+		return rcBLib:has_item("c_bs_rc_bullet", G.consumeables) and true or (pseudorandom('gun_spawn') < 0.35), { allow_duplicates = false }
 	end
 }
 
@@ -343,6 +343,6 @@ SMODS.Consumable {
 		error("somehow used a bullet")
 	end,
 	in_pool = function(self, args)
-		return BalatroSim:has_item("c_bs_rc_gun", G.consumeables) and true or (pseudorandom('bullet_spawn') < 0.5), { allow_duplicates = false }
+		return rcBLib:has_item("c_bs_rc_gun", G.consumeables) and true or (pseudorandom('bullet_spawn') < 0.5), { allow_duplicates = false }
 	end
 }
