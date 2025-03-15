@@ -305,30 +305,15 @@ return {
             j_bs_rc_snake = {
                 name = 'Snake',
                 text = {
-                    "{C:mult}+#1#{} Mult if hand is a {C:attention}Straight{};",
-                    "{X:mult,C:white}X#2#{} Mult if hand is a {C:attention}Straight Flush{}"
-                }
-            },
-            j_bs_rc_snake_spec = {
-                name = 'Snake',
-                text = {
-                    "{C:mult}+#1#{} Mult if hand is a {C:attention}Straight{};",
-                    "{X:mult,C:white}X#2#{} Mult if hand is a {C:attention}Straight Flush{} or {C:attention}Straight Spectrum{}"
+                    "{C:mult}+#1#{} Mult if hand is a {C:attention}Straight{} or similar;",
+                    "{X:mult,C:white}X#2#{} Mult if hand is a {C:attention}Straight Flush{} or similar"
                 }
             },
             j_bs_rc_snake_cry = {
                 name = 'Snake',
                 text = {
-                    "{C:mult}+#1#{} Mult if hand is a {C:attention}Straight{};",
-                    "{X:mult,C:white}X#2#{} Mult if hand is a {C:attention}Straight Flush{}",
-                    "{X:dark_edition,C:white}^#3#{} Mult if hand is a {C:attention}".. (((Cryptid_config and Cryptid_config.family_mode)) and "The Entire Deck" or "The Entire Fucking Deck") .. "{}"
-                }
-            },
-            j_bs_rc_snake_spec_cry = {
-                name = 'Snake',
-                text = {
-                    "{C:mult}+#1#{} Mult if hand is a {C:attention}Straight{};",
-                    "{X:mult,C:white}X#2#{} Mult if hand is a {C:attention}Straight Flush{} or {C:attention}Straight Spectrum{}",
+                    "{C:mult}+#1#{} Mult if hand is a {C:attention}Straight{} or similar;",
+                    "{X:mult,C:white}X#2#{} Mult if hand is a {C:attention}Straight Flush{} or similar;",
                     "{X:dark_edition,C:white}^#3#{} Mult if hand is a {C:attention}".. (((Cryptid_config and Cryptid_config.family_mode)) and "The Entire Deck" or "The Entire Fucking Deck") .. "{}"
                 }
             },
@@ -712,6 +697,13 @@ return {
                 text = {
                     "Shoots the blind and deals {C:attention}#1#%{} damage",
                     "{C:inactive}Requires a {C:attention}Bullet{C:inactive}"
+                }
+            },
+            c_bs_rc_gun_debug = {
+                name = "Gun",
+                text = {
+                    "Debug mode active;",
+                    "{X:mult,C:white}Fire{}{X:mult,C:white} {}{X:mult,C:white}at{}{X:mult,C:white} {}{X:mult,C:white}will.{}"
                 }
             },
             c_bs_rc_bullet = {

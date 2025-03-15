@@ -9,7 +9,7 @@
 	"badge_colour": "777777",
 	"badge_text_colour": "FFFFFF",
 	"display_name": "BalatroSim",
-	"version": "0.2.1",
+	"version": "0.2.2",
 	"dependencies": [
 		"rcblib (>=1.0.0)",
 		"Steamodded (>=1.0.0~BETA-0308a)",

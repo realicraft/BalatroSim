@@ -212,18 +212,64 @@ SMODS.Joker {
     end
 }
 
-local function snake_desc()
-    local spectra = (next(SMODS.find_mod("SpectrumFramework"))) or (next(SMODS.find_mod("Bunco"))) or (next(SMODS.find_mod("SixSuits"))) or (next(SMODS.find_mod("paperback")))
-    local cry = (next(SMODS.find_mod("Cryptid")) or false) -- or false to turn it into a boolean
-    if spectra and cry then
-        return "j_bs_rc_snake_spec_cry"
-    elseif spectra then
-        return "j_bs_rc_snake_spec"
-    elseif cry then
-        return "j_bs_rc_snake_cry"
-    else
-        return "j_bs_rc_snake"
-    end
+BalatroSim.SnakeHands = {
+    -- type can be "+", "*", or "^"
+    -- vanilla --
+    {hand = "Straight", type = "+", mult = 1},
+    {hand = "Straight Flush", type = "*", mult = 1},
+    -- straight spectra --
+    {hand = "spectrum_Straight Spectrum", type = "*", mult = 1},
+    {hand = "bunc_Straight Spectrum", type = "*", mult = 1},
+    {hand = "six_Straight Spectrum", type = "*", mult = 1},
+    {hand = "paperback_Straight Spectrum", type = "*", mult = 1},
+    -- cryptid --
+    {hand = "cry_WholeDeck", type = "^", mult = 1},
+    -- maximus --
+    {hand = "mxms_s_straight", type = "+", mult = 1.5},
+    {hand = "mxms_s_straight_f", type = "*", mult = 1.5},
+    -- highest priestess --
+    {hand = "vhp_Abandoned Straight", type = "+", mult = 1},
+    {hand = "vhp_Straight Blackjack", type = "+", mult = 1.2},
+    {hand = "vhp_Broadway", type = "+", mult = 1.1},
+    {hand = "vhp_Bumblebee Straight", type = "+", mult = 1.2},
+    {hand = "vhp_Candy Cane Straight", type = "+", mult = 1.2},
+    {hand = "vhp_Caucus Race", type = "+", mult = 1.2},
+    {hand = "vhp_Dashed", type = "+", mult = 1.4},
+    {hand = "vhp_Dashed Flush", type = "*", mult = 1.4},
+    {hand = "vhp_Disgraced Flush", type = "*", mult = 1},
+    {hand = "vhp_Even Hand", type = "+", mult = 1.3},
+    {hand = "vhp_Even Flush", type = "*", mult = 1.3},
+    {hand = "vhp_Five And Dime", type = "+", mult = 1},
+    {hand = "vhp_Five Dime Flush", type = "*", mult = 1},
+    {hand = "vhp_The Gay", type = "+", mult = 2},
+    {hand = "vhp_Gay Flush", type = "*", mult = 2},
+    {hand = "vhp_Hack", type = "+", mult = 1},
+    {hand = "vhp_Straight House", type = "+", mult = 1},
+    {hand = "vhp_9-5", type = "+", mult = 1},
+    {hand = "vhp_Not So Straight", type = "+", mult = 1},
+    {hand = "vhp_Odd Hand", type = "+", mult = 1.3},
+    {hand = "vhp_Odd Flush", type = "*", mult = 1.3},
+    {hand = "vhp_Pavilion", type = "+", mult = 1.2},
+    {hand = "vhp_The Prime Hand", type = "+", mult = 1.2},
+    {hand = "vhp_The Prime Flush", type = "*", mult = 1.2},
+    {hand = "vhp_Royal Farce", type = "*", mult = 1},
+    {hand = "vhp_Double Straight", type = "+", mult = 1},
+    {hand = "vhp_Seximal Straight", type = "+", mult = 1.2},
+    {hand = "vhp_Seximal Straight Flush", type = "*", mult = 1.2},
+    {hand = "vhp_Straight Slender", type = "+", mult = 1.3},
+    {hand = "vhp_So-Close Straight", type = "+", mult = 1},
+    {hand = "vhp_Solitaire Straight", type = "+", mult = 1.2},
+    {hand = "vhp_Face Straight", type = "+", mult = 1},
+    {hand = "vhp_The Shittiest 5 Card Hand Mathematically Fucking Possible", type = "+", mult = 0.9},
+    {hand = "vhp_Three-Fifths Straight", type = "+", mult = 0.6},
+    {hand = "vhp_Three-Flush Straight", type = "*", mult = 0.6},
+}
+
+--- @param hand string
+--- @param _type string should be one of `+`, `*`, or `^`
+--- @param mult number
+function BalatroSim.SnakeHands:add_joker(hand, _type, mult)
+    table.insert(self, {hand = hand, type = _type, mult = mult})
 end
 
 SMODS.Joker {
@@ -231,7 +277,7 @@ SMODS.Joker {
     config = { extra = { mult = 20, Xmult = 3, powmult = 1.5 } },
     loc_vars = function(self, info_queue, card)
         return {
-            key = snake_desc(),
+            key = (next(SMODS.find_mod("Cryptid")) or false) and "j_bs_rc_snake_cry" or "j_bs_rc_snake",
             vars = { card.ability.extra.mult, card.ability.extra.Xmult, card.ability.extra.powmult}
         }
     end,
@@ -242,50 +288,39 @@ SMODS.Joker {
     blueprint_compat = true,
     calculate = function(self, card, context)
         if context.joker_main then
-            -- ^1.5 Mult - Whole Deck (Cryptid)
-            if next(SMODS.find_mod("Cryptid")) and context.poker_hands and next(context.poker_hands['cry_WholeDeck']) then
-                return {
-                    emult = card.ability.extra.powmult, -- cryptid requires talisman, so assume it's already present
-                }
+            for _,v in pairs(BalatroSim.SnakeHands) do
+                if type(v) == "table" and context.scoring_name == v.hand then
+                    if v.type == "+" then
+                        return {
+                            mult_mod = card.ability.extra.mult * v.mult,
+                            message = localize { type = 'variable', key = 'a_mult', vars = { card.ability.extra.mult * v.mult } }
+                        }
+                    elseif v.type == "*" then
+                        return {
+                            Xmult_mod = card.ability.extra.Xmult * v.mult,
+                            message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult * v.mult } }
+                        }
+                    elseif v.type == "^" then
+                        return {
+                            emult = card.ability.extra.powmult * v.mult, -- cryptid requires talisman, so assume it's already present
+                        }
+                    end
+                end
             end
-            -- X3 Mult - Straight Flush, Straight Spectrum (Spectrum Framework, Bunco, Six Suits, Paperback)
+            -- if the function reaches this point, then the played hand is not in the list, but there's no guarentee it doesn't contain a straight (flush)
             if context.poker_hands and next(context.poker_hands['Straight Flush']) then
                 return {
                     Xmult_mod = card.ability.extra.Xmult,
                     message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult } }
                 }
             end
-            if next(SMODS.find_mod("SpectrumFramework")) and context.poker_hands and next(context.poker_hands['spectrum_Straight Spectrum']) then
-                return {
-                    Xmult_mod = card.ability.extra.Xmult,
-                    message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult } }
-                }
-            end
-            if next(SMODS.find_mod("Bunco")) and context.poker_hands and next(context.poker_hands['bunc_Straight Spectrum']) then
-                return {
-                    Xmult_mod = card.ability.extra.Xmult,
-                    message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult } }
-                }
-            end
-            if next(SMODS.find_mod("SixSuits")) and context.poker_hands and next(context.poker_hands['six_Straight Spectrum']) then
-                return {
-                    Xmult_mod = card.ability.extra.Xmult,
-                    message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult } }
-                }
-            end
-            if next(SMODS.find_mod("paperback")) and context.poker_hands and next(context.poker_hands['paperback_Straight Spectrum']) then
-                return {
-                    Xmult_mod = card.ability.extra.Xmult,
-                    message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult } }
-                }
-            end
-            -- +20 Mult - Straight
             if context.poker_hands and next(context.poker_hands['Straight']) then
                 return {
                     mult_mod = card.ability.extra.mult,
                     message = localize { type = 'variable', key = 'a_mult', vars = { card.ability.extra.mult } }
                 }
             end
+            -- at this point, the hand is not considered valid for a bonus, so don't return anything
         end
     end
 }

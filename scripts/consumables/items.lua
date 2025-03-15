@@ -23,7 +23,7 @@ SMODS.Consumable {
 	config = { hands = 2 },
 	atlas = 'bs_consumables',
 	cost = 4,
-	loc_vars = function(self, info_queue)
+	loc_vars = function(self, info_queue, card)
 		return { vars = { self.config.hands } }
 	end,
 	can_use = function(self, card)
@@ -49,7 +49,7 @@ SMODS.Consumable {
 	config = { discards = 2 },
 	atlas = 'bs_consumables',
 	cost = 4,
-	loc_vars = function(self, info_queue)
+	loc_vars = function(self, info_queue, card)
 		return { vars = { self.config.discards } }
 	end,
 	can_use = function(self, card)
@@ -77,7 +77,7 @@ SMODS.Consumable {
 	atlas = 'bs_consumables',
 	hidden = "true",
 	soul_set = "item",
-	loc_vars = function(self, info_queue)
+	loc_vars = function(self, info_queue, card)
 		return { vars = {} }
 	end,
 	can_use = function(self, card)
@@ -95,14 +95,14 @@ SMODS.Consumable {
 	config = { chip = 1 },
 	atlas = 'bs_consumables',
 	cost = 1,
-	loc_vars = function(self, info_queue)
+	loc_vars = function(self, info_queue, card)
 		return { vars = { self.config.chip } }
 	end,
 	can_use = function(self, card)
 		return rcBLib:blind_active()
 	end,
 	use = function(self, card, area, copier)
-		rcBLib:damage_blind(true, 1, 0.1)
+		rcBLib:damage_blind(true, card.ability.chip, 0.1)
 	end,
 	in_pool = function(self, args)
 		return pseudorandom('chip_spawn') < 0.01, { allow_duplicates = false } -- very rare
@@ -116,7 +116,7 @@ SMODS.Consumable {
 	config = {  },
 	atlas = 'bs_consumables',
 	cost = 1,
-	loc_vars = function(self, info_queue)
+	loc_vars = function(self, info_queue, card)
 		return { vars = {  } }
 	end,
 	can_use = function(self, card)
@@ -145,7 +145,7 @@ SMODS.Consumable {
 	config = { hand_types = 3 },
 	atlas = 'bs_consumables',
 	cost = 5,
-	loc_vars = function(self, info_queue)
+	loc_vars = function(self, info_queue, card)
 		return { vars = { self.config.hand_types } }
 	end,
 	can_use = function(self, card)
@@ -156,7 +156,7 @@ SMODS.Consumable {
 		local hands = {}
 		-- borrowed from Cryptid (specifically https://github.com/MathIsFun0/Cryptid/blob/main/Items/Planets.lua#L830C1-L853C4 )
 		local chosen_hand
-		while (#hands < self.config.hand_types) do
+		while (#hands < card.ability.hand_types) do
 			chosen_hand = pseudorandom_element(G.handlist, pseudoseed("expbottle"))
 			if G.GAME.hands[chosen_hand].visible then
 				table.insert(hands, chosen_hand)
@@ -223,11 +223,11 @@ SMODS.Consumable {
 	config = { max_highlighted = 2 },
 	atlas = 'bs_consumables',
 	cost = 4,
-	loc_vars = function(self, info_queue)
+	loc_vars = function(self, info_queue, card)
 		return { vars = { self.config.max_highlighted } }
 	end,
 	can_use = function(self, card)
-        if G.hand and (#G.hand.highlighted >= 1) and (#G.hand.highlighted <= self.config.max_highlighted) and allBad(G.hand.highlighted) then
+        if G.hand and (#G.hand.highlighted >= 1) and (#G.hand.highlighted <= card.ability.max_highlighted) and allBad(G.hand.highlighted) then
             return true
         end
     end,
@@ -263,14 +263,14 @@ SMODS.Consumable {
 	config = { base = 5, mul = 4 },
 	atlas = 'bs_consumables',
 	cost = 5,
-	loc_vars = function(self, info_queue)
+	loc_vars = function(self, info_queue, card)
 		return { vars = { self.config.base-1, self.config.base+self.config.mul-1 } }
 	end,
 	can_use = function(self, card)
         return true
     end,
 	use = function(self, card, area, copier)
-		local coins = self.config.base + math.floor(pseudorandom('wallet')*self.config.mul)
+		local coins = card.ability.base + math.floor(pseudorandom('wallet')*card.ability.mul)
 		ease_dollars(coins)
         G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + coins
         G.E_MANAGER:add_event(Event({func = (function() G.GAME.dollar_buffer = 0; return true end)}))
@@ -284,14 +284,14 @@ SMODS.Consumable {
 	config = { percent = 30 },
 	atlas = 'bs_consumables',
 	cost = 4,
-	loc_vars = function(self, info_queue)
+	loc_vars = function(self, info_queue, card)
 		return { vars = { self.config.percent } }
 	end,
 	can_use = function(self, card)
 		return rcBLib:blind_active()
 	end,
 	use = function(self, card, area, copier)
-		rcBLib:damage_blind(false, self.config.percent, 0.6 * math.sqrt(G.SETTINGS.GAMESPEED))
+		rcBLib:damage_blind(false, card.ability.percent, 0.6 * math.sqrt(G.SETTINGS.GAMESPEED))
 	end,
 	in_pool = function(self, args)
 		return pseudorandom('sword_spawn') < 0.5, { allow_duplicates = false }
@@ -305,21 +305,34 @@ SMODS.Consumable {
 	config = { percent = 50 },
 	atlas = 'bs_consumables',
 	cost = 6,
-	loc_vars = function(self, info_queue)
-		return { vars = { self.config.percent } }
+	loc_vars = function(self, info_queue, card)
+		return {
+			key = self.config.debug and "c_bs_rc_gun_debug" or "c_bs_rc_gun",
+			vars = { self.config.percent }
+			}
 	end,
 	can_use = function(self, card)
-		return rcBLib:blind_active() and rcBLib:has_item("c_bs_rc_bullet", G.consumeables)
+		return rcBLib:blind_active() and (rcBLib:has_item("c_bs_rc_bullet", G.consumeables) or card.ability.debug)
 	end,
 	use = function(self, card, area, copier)
 		play_sound("bs_rc_gun_shoot")
-		rcBLib:damage_blind(false, self.config.percent, 0.3 * math.sqrt(G.SETTINGS.GAMESPEED))
-		for _,v in pairs(G.consumeables.cards) do
-			if v.config.center.key == "c_bs_rc_bullet" then
-				v:start_dissolve()
-				break
+		rcBLib:damage_blind(false, card.ability.percent, 0.3 * math.sqrt(G.SETTINGS.GAMESPEED))
+		if not card.ability.debug then
+			for _,v in pairs(G.consumeables.cards) do
+				if v.config.center.key == "c_bs_rc_bullet" then
+					v:start_dissolve()
+					break
+				end
 			end
 		end
+	end,
+	calculate = function(self, card, context)
+		if card.ability.debug then
+			card.children.center:set_sprite_pos({x = 5, y = 5})
+		end
+	end,
+	keep_on_use = function(self, card)
+		return (card.ability.debug or false)
 	end,
 	in_pool = function(self, args)
 		return rcBLib:has_item("c_bs_rc_bullet", G.consumeables) and true or (pseudorandom('gun_spawn') < 0.35), { allow_duplicates = false }
@@ -333,7 +346,7 @@ SMODS.Consumable {
 	config = {  },
 	atlas = 'bs_consumables',
 	cost = 2,
-	loc_vars = function(self, info_queue)
+	loc_vars = function(self, info_queue, card)
 		return { vars = {  } }
 	end,
 	can_use = function(self, card)

@@ -4,17 +4,7 @@ Cryptid.edeck_sprites.enhancement["m_bs_rc_fire"] = {atlas = "bs_rc_bs_decks", p
 Cryptid.edeck_sprites.enhancement["m_bs_rc_poison"] = {atlas = "bs_rc_bs_decks", pos = {x = 4, y = 2}} -- poisoned
 Cryptid.edeck_sprites.sticker["bs_rc_markedfordeath"] = {atlas = "bs_rc_bs_decks", pos = {x = 5, y = 0}} -- marked for death
 
--- decks that will be getting removed at some point
-Cryptid.edeck_sprites.sticker["bs_rc_align_none"] = {atlas = "bs_rc_bs_decks", pos = {x = 5, y = 2}}
-Cryptid.edeck_sprites.sticker["bs_rc_align_normal"] = {atlas = "bs_rc_bs_decks", pos = {x = 5, y = 2}}
-Cryptid.edeck_sprites.sticker["bs_rc_align_fire"] = {atlas = "bs_rc_bs_decks", pos = {x = 5, y = 2}}
-Cryptid.edeck_sprites.sticker["bs_rc_align_water"] = {atlas = "bs_rc_bs_decks", pos = {x = 5, y = 2}}
-Cryptid.edeck_sprites.sticker["bs_rc_align_electric"] = {atlas = "bs_rc_bs_decks", pos = {x = 5, y = 2}}
-Cryptid.edeck_sprites.sticker["bs_rc_align_plant"] = {atlas = "bs_rc_bs_decks", pos = {x = 5, y = 2}}
-Cryptid.edeck_sprites.sticker["bs_rc_align_ice"] = {atlas = "bs_rc_bs_decks", pos = {x = 5, y = 2}}
-Cryptid.edeck_sprites.sticker["bs_rc_align_light"] = {atlas = "bs_rc_bs_decks", pos = {x = 5, y = 2}}
-Cryptid.edeck_sprites.sticker["bs_rc_align_dark"] = {atlas = "bs_rc_bs_decks", pos = {x = 5, y = 2}}
-Cryptid.edeck_sprites.sticker["bs_rc_align_energy"] = {atlas = "bs_rc_bs_decks", pos = {x = 5, y = 2}}
+-- decks got removed :)
 
 -- JOKERS --
 SMODS.Joker {

@@ -7,6 +7,7 @@ BalatroSim.Alignment = SMODS.Sticker:extend{
     joker_compat = true,
     card_compat = true,
     needs_enable_flag = true,
+    no_edeck = true, -- disable cryptid sticker decks
 	draw = function(self, card) --don't draw shine
 		G.shared_stickers[self.key].role.draw_major = card
 		G.shared_stickers[self.key]:draw_shader("dissolve", nil, nil, nil, card.children.center)
@@ -209,6 +210,8 @@ BalatroSim.EnhanceAlignments = {
     -- aikoyori's shenanigans --
     {enhance = "m_akyrs_brick_card", align = "bs_rc_align_normal"},
     {enhance = "m_akyrs_scoreless", align = "bs_rc_align_none"},
+    -- highest priestess
+    {enhance = "m_vhp_special", align = "bs_rc_align_normal"},
 }
 
 --- based off of FusionJokers' FusionJokers.fusions:add_fusion
