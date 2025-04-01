@@ -18,7 +18,8 @@ SMODS.Atlas {
 -- joker atlas
 SMODS.Atlas {
     key = "bs_jokers",
-    path = "jokers.png",
+    --path = "jokers.png",
+    path = "jokers_af.png",
     px = 71,
     py = 95
 }
@@ -50,7 +51,8 @@ SMODS.Atlas {
 -- enhancement atlas
 SMODS.Atlas {
     key = "bs_enhancements",
-    path = "enhancements.png",
+    --path = "enhancements.png",
+    path = "enhancements_af.png",
     px = 71,
     py = 95
 }
@@ -58,7 +60,8 @@ SMODS.Atlas {
 -- consumable atlas
 SMODS.Atlas {
     key = "bs_consumables",
-    path = "consumables.png",
+    --path = "consumables.png",
+    path = "consumables_af.png",
     px = 71,
     py = 95
 }
