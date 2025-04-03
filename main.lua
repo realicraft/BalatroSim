@@ -18,8 +18,7 @@ SMODS.Atlas {
 -- joker atlas
 SMODS.Atlas {
     key = "bs_jokers",
-    --path = "jokers.png",
-    path = "jokers_af.png",
+    path = "jokers.png",
     px = 71,
     py = 95
 }
@@ -51,8 +50,7 @@ SMODS.Atlas {
 -- enhancement atlas
 SMODS.Atlas {
     key = "bs_enhancements",
-    --path = "enhancements.png",
-    path = "enhancements_af.png",
+    path = "enhancements.png",
     px = 71,
     py = 95
 }
@@ -60,8 +58,7 @@ SMODS.Atlas {
 -- consumable atlas
 SMODS.Atlas {
     key = "bs_consumables",
-    --path = "consumables.png",
-    path = "consumables_af.png",
+    path = "consumables.png",
     px = 71,
     py = 95
 }
@@ -142,39 +139,42 @@ SMODS.Sound {
 }
 
 -- ALIGNMENTS --
-NFS.load(SMODS.current_mod.path .. 'scripts/alignments.lua')()
+assert(SMODS.load_file('scripts/alignments.lua'))()
 
 -- BLINDS --
-NFS.load(SMODS.current_mod.path .. 'scripts/blinds.lua')()
+assert(SMODS.load_file('scripts/blinds.lua'))()
 
 -- CONSUMABLES --
-NFS.load(SMODS.current_mod.path .. 'scripts/consumables/items.lua')()
-NFS.load(SMODS.current_mod.path .. 'scripts/consumables/spectrals.lua')()
+assert(SMODS.load_file('scripts/consumables/items.lua'))()
+assert(SMODS.load_file('scripts/consumables/spectrals.lua'))()
 
 -- ENHANCEMENTS --
-NFS.load(SMODS.current_mod.path .. 'scripts/enhancements/snow.lua')()
---NFS.load(SMODS.current_mod.path .. 'scripts/enhancements/hardite.lua')()
---NFS.load(SMODS.current_mod.path .. 'scripts/enhancements/soaked.lua')()
-NFS.load(SMODS.current_mod.path .. 'scripts/enhancements/fire.lua')()
-NFS.load(SMODS.current_mod.path .. 'scripts/enhancements/poison.lua')()
+assert(SMODS.load_file('scripts/enhancements/snow.lua'))()
+--assert(SMODS.load_file('scripts/enhancements/hardite.lua'))()
+--assert(SMODS.load_file('scripts/enhancements/soaked.lua'))()
+assert(SMODS.load_file('scripts/enhancements/fire.lua'))()
+assert(SMODS.load_file('scripts/enhancements/poison.lua'))()
 
 -- STICKERS --
-NFS.load(SMODS.current_mod.path .. 'scripts/stickers.lua')()
+assert(SMODS.load_file('scripts/stickers.lua'))()
 
 -- JOKERS --
-NFS.load(SMODS.current_mod.path .. 'scripts/jokers.lua')()
-NFS.load(SMODS.current_mod.path .. 'scripts/legendaries.lua')()
+assert(SMODS.load_file('scripts/jokers.lua'))()
+assert(SMODS.load_file('scripts/legendaries.lua'))()
 
 -- BOOSTERS --
-NFS.load(SMODS.current_mod.path .. 'scripts/boosters.lua')()
+assert(SMODS.load_file('scripts/boosters.lua'))()
 
 -- TAGS --
-NFS.load(SMODS.current_mod.path .. 'scripts/tags.lua')()
+assert(SMODS.load_file('scripts/tags.lua'))()
 
 -- DECKS --
-NFS.load(SMODS.current_mod.path .. 'scripts/decks.lua')()
+assert(SMODS.load_file('scripts/decks.lua'))()
 
 -- COMPAT --
 if (SMODS.Mods["Cryptid"] or {}).can_load then
-    NFS.load(SMODS.current_mod.path .. 'scripts/compat/cryptid.lua')()
+    assert(SMODS.load_file('scripts/compat/cryptid.lua'))()
+end
+if (SMODS.Mods["malverk"] or {}).can_load then
+    assert(SMODS.load_file('scripts/compat/malverk.lua'))()
 end

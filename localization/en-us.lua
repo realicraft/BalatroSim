@@ -715,6 +715,40 @@ return {
                 }
             },
         },
+        alt_texture = {
+            bs_rc_items = {
+                name = "April Fools Items",
+                text = {
+                    ""
+                }
+            },
+            bs_rc_spectrals = {
+                name = "April Fools Spectrals",
+                text = {
+                    ""
+                }
+            },
+            bs_rc_enhancements = {
+                name = "April Fools Enhancements",
+                text = {
+                    ""
+                }
+            },
+            bs_rc_jokers = {
+                name = "April Fools Jokers",
+                text = {
+                    ""
+                }
+            },
+        },
+        texture_packs = {
+            bs_rc_aprilfools = {
+                name = "April Fools Textures",
+                text = {
+                    "Textures used in the Aprill Fools update"
+                }
+            }
+        },
     },
     misc = {
         --achievement_descriptions={},
@@ -734,6 +768,16 @@ return {
             bs_rc_notice_poison_cure = "Cured!",
             bs_rc_notice_lava_dunk = "Dunked!",
             bs_rc_notice_mfd_expire = "Doomed!",
+
+            bs_rc_luigi_arrow = "[Arrow]!",
+            bs_rc_luigi_avicii = "[Avicii]!",
+            bs_rc_luigi_lonely = "[Lonely Together]!",
+            bs_rc_luigi_silhouettes = "[Silhouettes]!",
+            bs_rc_luigi_heaven = "[Heaven]!",
+            bs_rc_luigi_fades = "[Fades Away]!",
+            bs_rc_luigi_broken = "[Broken Arrows]!",
+            bs_rc_luigi_wake = "[Wake Me Up]!",
+            bs_rc_luigi_without = "[Without You]!",
         },
         --high_scores={},
         labels={
